@@ -8,6 +8,9 @@ var express = require('express')
 , serve_port = '4444'
 , site_name = 'Twistednode'
 
+var pageArray = ["main.html"]
+
+
 app.use(express.static('static'))
 
 console.log(__dirname+contentpath+htmlheader)
@@ -22,6 +25,11 @@ app.listen(serve_port, function () {
   console.log(site_name+' started on port '+serve_port);
 });
 
+function DynamicData(){
+
+   return;
+}
+
 function RenderHTML(content,encoding,res){
    fs.readFile(__dirname+contentpath+htmlheader, encoding, function(err,data) {
       var send_header = data.replace(/:::sitename:::/g, site_name)
@@ -35,4 +43,13 @@ function RenderHTML(content,encoding,res){
          })
       })
    })
+}
+
+function contains(a,obj){
+   for (var i = 0; i < a.length; i++){
+      if(a[i] == obj) {
+         return true
+      }
+   }
+   return false;
 }
