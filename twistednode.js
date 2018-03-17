@@ -27,20 +27,19 @@ function DynamicData(){
 }
 
 function RenderHTML(html_part,encoding,res){
-   //Foreach the LoadHTMLArray Here compresses code
    console.log(html_part)
    fs.readFile(__dirname+contentpath+''+html_header,encoding,function(err,data){
-      var send_page = data.replace(/:::sitename:::/g, site_name)
-      console.log(send_page)
-      res.write(send_page)
+      var send_header = data.replace(/:::sitename:::/g, site_name)
+      console.log(send_header)
+      res.write(send_header)
       fs.readFile(__dirname+contentpath+html_part,encoding,function(err,data){
-         var send_page = data.replace(/:::sitename:::/g, site_name)
-         console.log(send_page)
-         res.write(send_page)
-         fs.readFile(__dirname+contentpath+''+html_header,encoding,function(err,data){
-            var send_page = data.replace(/:::sitename:::/g, site_name)
-            console.log(send_page)
-            res.write(send_page)
+         var send_content = data.replace(/:::sitename:::/g, site_name)
+         console.log(send_content)
+         res.write(send_content)
+         fs.readFile(__dirname+contentpath+''+html_footer,encoding,function(err,data){
+            var send_footer = data.replace(/:::sitename:::/g, site_name)
+            console.log(send_footer)
+            res.write(send_footer)
             res.end()
          })
       })
