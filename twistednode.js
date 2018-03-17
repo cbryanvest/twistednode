@@ -6,6 +6,7 @@ var express = require('express')
 , contentpath = '/parts/'
 , encoding = 'utf8'
 , serve_port = '4444'
+, site_name = 'Twistednode'
 
 app.use(express.static('static'))
 
@@ -23,11 +24,13 @@ app.listen(serve_port, function () {
 
 function RenderHTML(content,encoding,res){
    fs.readFile(__dirname+contentpath+htmlheader, encoding, function(err,data) {
-      res.write(data)
+      var send_header = data.replace(/{{sitename}}/g, site_name)
+      res.write(send_header)
       fs.readFile(__dirname+contentpath+content, encoding, function(err,data){
          res.write(data)
          fs.readFile(__dirname+contentpath+htmlfooter, encoding, function(err,data){
-            res.write(data)
+            var send_footer = data.replace(/{{sitename}}/g, site_name)
+            res.write(send_footer)
             res.end()
          })
       })
