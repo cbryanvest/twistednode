@@ -5,10 +5,10 @@ var express = require('express')
 , htmlfooter = 'footer.html'
 , contentpath = '/parts/'
 , encoding = 'utf8'
-, serve_port = '4444'
+, server_port = '4444'
 , site_name = 'Twistednode'
 
-var pageArray = ["main.html"]
+var LoadHTMLArray = ["header.html","content.html","footer.html"]
 
 
 app.use(express.static('static'))
@@ -17,12 +17,12 @@ console.log(__dirname+contentpath+htmlheader)
 
 app.get('/', function (req, res) {
    console.log('connect')
-   RenderHTML('main.html',encoding,res)
+   RenderHTML("content.html",encoding,res)
 })
 
 
-app.listen(serve_port, function () {
-  console.log(site_name+' started on port '+serve_port);
+app.listen(server_port, function () {
+  console.log(site_name+' started on port '+server_port);
 });
 
 function DynamicData(){
@@ -30,19 +30,26 @@ function DynamicData(){
    return;
 }
 
-function RenderHTML(content,encoding,res){
-   fs.readFile(__dirname+contentpath+htmlheader, encoding, function(err,data) {
-      var send_header = data.replace(/:::sitename:::/g, site_name)
-      res.write(send_header)
-      fs.readFile(__dirname+contentpath+content, encoding, function(err,data){
-         res.write(data)
-         fs.readFile(__dirname+contentpath+htmlfooter, encoding, function(err,data){
-            var send_footer = data.replace(/:::sitename:::/g, site_name)
-            res.write(send_footer)
+function RenderHTML(html_part,encoding,res){
+   //Foreach the LoadHTMLArray Here compresses code
+   console.log(html_part)
+   fs.readFile(__dirname+contentpath+'header.html',encoding,function(err,data){
+      var send_page = data.replace(/:::sitename:::/g, site_name)
+      console.log(send_page)
+      res.write(send_page)
+      fs.readFile(__dirname+contentpath+html_part,encoding,function(err,data){
+         var send_page = data.replace(/:::sitename:::/g, site_name)
+         console.log(send_page)
+         res.write(send_page)
+         fs.readFile(__dirname+contentpath+'footer.html',encoding,function(err,data){
+            var send_page = data.replace(/:::sitename:::/g, site_name)
+            console.log(send_page)
+            res.write(send_page)
             res.end()
          })
       })
    })
+   return;
 }
 
 function contains(a,obj){
