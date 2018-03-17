@@ -19,17 +19,17 @@ app.get('/', function (req, res) {
 
 
 app.listen(serve_port, function () {
-  console.log('Twistednode started on port '+serve_port);
+  console.log(site_name+' started on port '+serve_port);
 });
 
 function RenderHTML(content,encoding,res){
    fs.readFile(__dirname+contentpath+htmlheader, encoding, function(err,data) {
-      var send_header = data.replace(/{{sitename}}/g, site_name)
+      var send_header = data.replace(/:::sitename:::/g, site_name)
       res.write(send_header)
       fs.readFile(__dirname+contentpath+content, encoding, function(err,data){
          res.write(data)
          fs.readFile(__dirname+contentpath+htmlfooter, encoding, function(err,data){
-            var send_footer = data.replace(/{{sitename}}/g, site_name)
+            var send_footer = data.replace(/:::sitename:::/g, site_name)
             res.write(send_footer)
             res.end()
          })
