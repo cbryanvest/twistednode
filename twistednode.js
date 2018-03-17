@@ -21,9 +21,11 @@ app.listen(server_port, function () {
   console.log(site_name+' started on port '+server_port);
 });
 
-function DynamicData(){
-
-   return;
+function DynamicData(send_content){
+   var send_content = send_content.replace(/:::sitename:::/g, site_name)
+       send_content = send_content.replace(/:::anothervar:::/g, "This is Another Variable Test")
+       send_content = send_content.replace(/:::servertime:::/g,new Date())
+   return send_content;
 }
 
 function RenderHTML(html_part,encoding,res){
@@ -33,7 +35,7 @@ function RenderHTML(html_part,encoding,res){
       console.log(send_header)
       res.write(send_header)
       fs.readFile(__dirname+contentpath+html_part,encoding,function(err,data){
-         var send_content = data.replace(/:::sitename:::/g, site_name)
+         send_content = DynamicData(data)
          console.log(send_content)
          res.write(send_content)
          fs.readFile(__dirname+contentpath+''+html_footer,encoding,function(err,data){
