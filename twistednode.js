@@ -8,9 +8,6 @@ var express = require('express')
 , server_port = '4444'
 , site_name = 'Twistednode'
 
-var LoadHTMLArray = ["header.html","content.html","footer.html"]
-
-
 app.use(express.static('static'))
 
 console.log(__dirname+contentpath+htmlheader)
@@ -19,7 +16,6 @@ app.get('/', function (req, res) {
    console.log('connect')
    RenderHTML("content.html",encoding,res)
 })
-
 
 app.listen(server_port, function () {
   console.log(site_name+' started on port '+server_port);
@@ -50,13 +46,4 @@ function RenderHTML(html_part,encoding,res){
       })
    })
    return;
-}
-
-function contains(a,obj){
-   for (var i = 0; i < a.length; i++){
-      if(a[i] == obj) {
-         return true
-      }
-   }
-   return false;
 }
