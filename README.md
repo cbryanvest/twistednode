@@ -34,17 +34,18 @@ The header.html and footer.html can contain whatever you want but they have to c
 
 
 Page Head should contain at least these elements
-
+```html
 <!DOCTYPE html>
    <html>
       <head>
       </head>
       <body>
+```
         
 
 Page End could contain at least these elements
-
-      </body>
+```html
+</body>
 </html>
-
+```
 Other than these requirements you can have whatever you need in the header.html and footer.html files.
