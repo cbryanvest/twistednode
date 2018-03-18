@@ -25,7 +25,6 @@ function DynamicData(send_content){
    var send_content = send_content.replace(/:::sitename:::/g, site_name)
        send_content = send_content.replace(/:::anothervar:::/g, "This is Another Variable Test")
        send_content = send_content.replace(/:::servertime:::/g,new Date())
-       send_content = send_content.replace(/:::fest:::/g,new Date())
    return send_content;
 }
 
