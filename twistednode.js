@@ -25,16 +25,17 @@ function DynamicData(send_content){
    var send_content = send_content.replace(/:::sitename:::/g, site_name)
        send_content = send_content.replace(/:::anothervar:::/g, "This is Another Variable Test")
        send_content = send_content.replace(/:::servertime:::/g,new Date())
+       send_content = send_content.replace(/:::fest:::/g,new Date())
    return send_content;
 }
 
 function RenderHTML(html_part,encoding,res){
    fs.readFile(__dirname+contentpath+''+html_header,encoding,function(err,data){
-      res.write(data.replace(/:::sitename:::/g, site_name))
+      res.write(DynamicData(data))
       fs.readFile(__dirname+contentpath+html_part,encoding,function(err,data){
          res.write(DynamicData(data))
          fs.readFile(__dirname+contentpath+''+html_footer,encoding,function(err,data){
-            res.write(data.replace(/:::sitename:::/g, site_name))
+            res.write(DynamicData(data))
             res.end()
          })
       })
