@@ -49,3 +49,33 @@ Page End could contain at least these elements
 </html>
 ```
 Other than these requirements you can have whatever you need in the header.html and footer.html files.
+
+Creating new Pages
+
+To create a new page there are two steps. 
+
+First step is to create the html page in the parts/ folder. In this example we will use foo.html
+
+From the site folder type
+```shell
+touch parts/foo.html
+echo "This is the foo test">>parts/foo.html
+```
+
+The edit twistednode.js adding the javascript below. This contains everything to run this new page.
+
+```javascript
+app.get('/foo', function(req,res){
+  RenderHTML("foo.html",encoding,function(rendered){
+    console.log(newdata)
+    DynamicData(rendered,newdata,function(dynamicdata){
+      res.write(dynamicdata)
+      res.end()
+    })
+  })
+})
+```
+
+Restart twistednode.js and you should now be able to go to http://YOURIP:server_port/foo and see the message
+
+This is the foo test 
