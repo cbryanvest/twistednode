@@ -13,6 +13,7 @@ If you download the repo it should contain all of the files needed to start this
 
 
 Checkout twistednode wherever you store your sites
+
 git checkout https://github.com/cbryanvest/twistednode.git
 
 Modify the port that twistednode.js will listen on by editing twistednode.js and changing this line
