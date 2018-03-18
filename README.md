@@ -17,7 +17,9 @@ Checkout twistednode wherever you store your sites
 git checkout https://github.com/cbryanvest/twistednode.git
 
 Modify the port that twistednode.js will listen on by editing twistednode.js and changing this line
+
 server_port = '4444'
+
 to whatever port you want to use.
 
 Run the server with 
