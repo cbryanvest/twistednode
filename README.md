@@ -65,8 +65,8 @@ echo "This is the foo test">>parts/foo.html
 The edit twistednode.js adding the javascript below. This contains everything to run this new page.
 
 ```javascript
-app.get('/foowithvar', function(req,res){
-  RenderHTML("foowithvar.html",encoding,function(rendered){
+app.get('/foo', function(req,res){
+  RenderHTML("foo.html",encoding,function(rendered){
     console.log(newdata)
     DynamicData(rendered,newdata,function(dynamicdata){
       res.write(dynamicdata)
@@ -91,8 +91,8 @@ Then we will add the same app.get that we did above but assign the variable.
 
 
 ```javascript
-app.get('/foo', function(req,res){
-  RenderHTML("foo.html",encoding,function(rendered){
+app.get('/foowithvar', function(req,res){
+  RenderHTML("foowithvar.html",encoding,function(rendered){
     console.log(newdata)
     newdata['variable'] = 'This is the test Variable That we Added'
     DynamicData(rendered,newdata,function(dynamicdata){
