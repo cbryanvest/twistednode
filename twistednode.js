@@ -7,7 +7,6 @@ var express = require('express')
 , encoding = 'utf8'
 , server_port = '4444'
 , site_name = 'Twistednode'
-, esclient = require('./esconnection.js')
 
 var newdata = Object()
 app.use(express.static('static'))
