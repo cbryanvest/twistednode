@@ -9,40 +9,65 @@ var express = require('express')
 , site_name = 'Twistednode'
 , esclient = require('./esconnection.js')
 
+var newdata = Object()
 app.use(express.static('static'))
 
 console.log(__dirname+contentpath+html_header)
 
-app.get('/', function (req, res) {
-   console.log('connect')
-   esclient.cluster.health({}, function(eserr,esresp,esstatus){
-      console.log(esresp)
-      RenderHTML("content.html",encoding,res,esresp)
-   })
+app.get('/', function(req,res){
+  RenderHTML("content.html",encoding,function(rendered){
+    newdata["servertime"] = new Date()
+    newdata["anothervar"] = "Another Test Variable"
+    newdata["clusterstat"] = "Testing the clusterstat Variable"
+    console.log(newdata)
+    DynamicData(rendered,newdata,function(dynamicdata){
+      res.write(dynamicdata)
+      res.end()
+    })
+  })
 })
 
 app.listen(server_port, function () {
   console.log(site_name+' started on port '+server_port);
 });
 
-function DynamicData(send_content,extradata){
-   var send_content = send_content.replace(/:::sitename:::/g, site_name)
-       send_content = send_content.replace(/:::anothervar:::/g, "This is Another Variable Test")
-       send_content = send_content.replace(/:::servertime:::/g,new Date())
-       send_content = send_content.replace(/:::clusterstat:::/g, extradata.status)
-   return send_content;
+function DynamicData(sendcontent,newdata,callback){
+  var dynamiccontent
+  dynamiccontent = sendcontent
+  newdata["sitename"] = site_name
+  console.log(typeof newdata)
+  console.log(Object.keys(newdata).length)
+  if(typeof newdata !== "object"){
+    console.log("Sending back original")
+    callback(dynamiccontent)
+  }else{
+    var keycounter=0;
+    for(k in newdata){
+      var usek = ':::'+k+':::'
+      console.log("Replacing "+usek+" with "+newdata[k])
+      dynamiccontent = dynamiccontent.replace(new RegExp(usek,'g'),newdata[k])
+      keycounter += 1
+      console.log(Object.keys(newdata).length - keycounter)
+      if((Object.keys(newdata).length - keycounter) === 0){
+        console.log("Counter Hit Returning dynamiccontent")
+        callback(dynamiccontent)
+      }
+    }
+  }
 }
 
-function RenderHTML(html_part,encoding,res,extradata){
+
+function RenderHTML(html_part,encoding,callback){
+  
    fs.readFile(__dirname+contentpath+''+html_header,encoding,function(err,data){
-      res.write(DynamicData(data,extradata))
+      var rendered_page = ""
+      rendered_page += data
       fs.readFile(__dirname+contentpath+html_part,encoding,function(err,data){
-         res.write(DynamicData(data,extradata))
+         rendered_page += data
          fs.readFile(__dirname+contentpath+''+html_footer,encoding,function(err,data){
-            res.write(DynamicData(data,extradata))
-            res.end()
+            rendered_page += data
+            callback(rendered_page)
          })
       })
    })
-   return;
 }
