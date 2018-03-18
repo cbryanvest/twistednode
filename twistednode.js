@@ -29,19 +29,12 @@ function DynamicData(send_content){
 }
 
 function RenderHTML(html_part,encoding,res){
-   console.log(html_part)
    fs.readFile(__dirname+contentpath+''+html_header,encoding,function(err,data){
-      var send_header = data.replace(/:::sitename:::/g, site_name)
-      console.log(send_header)
-      res.write(send_header)
+      res.write(data.replace(/:::sitename:::/g, site_name))
       fs.readFile(__dirname+contentpath+html_part,encoding,function(err,data){
-         send_content = DynamicData(data)
-         console.log(send_content)
-         res.write(send_content)
+         res.write(DynamicData(data))
          fs.readFile(__dirname+contentpath+''+html_footer,encoding,function(err,data){
-            var send_footer = data.replace(/:::sitename:::/g, site_name)
-            console.log(send_footer)
-            res.write(send_footer)
+            res.write(data.replace(/:::sitename:::/g, site_name))
             res.end()
          })
       })
