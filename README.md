@@ -28,3 +28,23 @@ node twistednode.js
 
 or your favorite package manager.
 
+The general usage is to edit the files in the parts folder. This folder must contain the files header.html, footer.html, and whatever pages you are going to call from the server.
+
+The header.html and footer.html can contain whatever you want but they have to contain the page head and page end.
+
+
+Page Head should contain at least these elements
+
+<!DOCTYPE html>
+   <html>
+      <head>
+      </head>
+      <body>
+        
+
+Page End could contain at least these elements
+
+      </body>
+</html>
+
+Other than these requirements you can have whatever you need in the header.html and footer.html files.
