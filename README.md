@@ -65,8 +65,8 @@ echo "This is the foo test">>parts/foo.html
 The edit twistednode.js adding the javascript below. This contains everything to run this new page.
 
 ```javascript
-app.get('/foo', function(req,res){
-  RenderHTML("foo.html",encoding,function(rendered){
+app.get('/foowithvar', function(req,res){
+  RenderHTML("foowithvar.html",encoding,function(rendered){
     console.log(newdata)
     DynamicData(rendered,newdata,function(dynamicdata){
       res.write(dynamicdata)
@@ -79,3 +79,26 @@ app.get('/foo', function(req,res){
 Restart twistednode.js and you should now be able to go to http://YOURIP:server_port/foo and see the message
 
 This is the foo test 
+
+If you want to add variables to your page you just have to add them to the page and to the variable object.
+
+```shell
+touch parts/foowithvar.html
+echo "This is the foo test but with a variable :::variable:::">>parts/foo.html
+```
+
+Then we will add the same app.get that we did above but assign the variable.
+
+
+```javascript
+app.get('/foo', function(req,res){
+  RenderHTML("foo.html",encoding,function(rendered){
+    console.log(newdata)
+    newdata['variable'] = 'This is the test Variable That we Added'
+    DynamicData(rendered,newdata,function(dynamicdata){
+      res.write(dynamicdata)
+      res.end()
+    })
+  })
+})
+```
