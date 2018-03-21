@@ -1,8 +1,6 @@
 var express = require('express')
 , app = express()
 , fs = require('fs')
-, html_header = 'header.html'
-, html_footer = 'footer.html'
 , contentpath = '/parts/'
 , encoding = 'utf8'
 , server_port = '4444'
@@ -11,10 +9,11 @@ var express = require('express')
 var newdata = Object()
 app.use(express.static('static'))
 
-console.log(__dirname+contentpath+html_header)
-
 app.get('/', function(req,res){
-  RenderHTML("content.html",encoding,function(rendered){
+  var thisheader = 'header.html'
+  var thisfooter = 'footer.html'
+  var thiscontent = 'content.html'
+  RenderHTML(thisheader,thisfooter,thiscontent,encoding,function(rendered){
     newdata["servertime"] = new Date()
     newdata["anothervar"] = "Another Test Variable"
     newdata["clusterstat"] = "Testing the clusterstat Variable"
@@ -56,17 +55,17 @@ function DynamicData(sendcontent,newdata,callback){
 }
 
 
-function RenderHTML(html_part,encoding,callback){
-  
-   fs.readFile(__dirname+contentpath+''+html_header,encoding,function(err,data){
-      var rendered_page = ""
+function RenderHTML(html_header,html_footer,html_part,encoding,callback){
+  console.log(html_header)
+  fs.readFile(__dirname+contentpath+''+html_header,encoding,function(err,data){
+    var rendered_page = ""
+    rendered_page += data
+    fs.readFile(__dirname+contentpath+html_part,encoding,function(err,data){
       rendered_page += data
-      fs.readFile(__dirname+contentpath+html_part,encoding,function(err,data){
-         rendered_page += data
-         fs.readFile(__dirname+contentpath+''+html_footer,encoding,function(err,data){
-            rendered_page += data
-            callback(rendered_page)
-         })
+      fs.readFile(__dirname+contentpath+''+html_footer,encoding,function(err,data){
+        rendered_page += data
+        callback(rendered_page)
       })
-   })
+    })
+  })
 }
