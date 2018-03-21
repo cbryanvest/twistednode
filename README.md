@@ -95,7 +95,10 @@ Then we will add the same app.get that we did above but assign the variable.
 
 ```javascript
 app.get('/foowithvar', function(req,res){
-  RenderHTML("foowithvar.html",encoding,function(rendered){
+  var thisheader = 'header.html'
+  var thisfooter = 'footer.html'
+  var thiscontent = 'content.html'
+  RenderHTML(thisheader,thisfooter,thiscontent,encoding,function(rendered){
     console.log(newdata)
     newdata['variable'] = 'This is the test Variable That we Added'
     DynamicData(rendered,newdata,function(dynamicdata){
