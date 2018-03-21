@@ -62,7 +62,7 @@ touch parts/foo.html
 echo "This is the foo test">>parts/foo.html
 ```
 
-The edit twistednode.js adding the javascript below. This contains everything to run this new page.
+Then edit twistednode.js adding the javascript below. This contains everything to run this new page.
 
 ```javascript
 app.get('/foo', function(req,res){
@@ -101,4 +101,8 @@ app.get('/foowithvar', function(req,res){
     })
   })
 })
+
+Restart twistednode and go to http://YOURIP:server_port/foowithvar and you should see
+
+This is the foo test but with a variable This is the test Variable That we Added
 ```
