@@ -48,11 +48,9 @@ Also if serving a full page footer should could contain at least these elements
 </body>
 </html>
 ```
-Though this could also be used to serve somthing you are going to load into another page in which case the header and footer files can be blank and content can be whatever you want to put in it.
+Though this could also be used to serve somthing you are going to load into another page in which case the header and footer files can contain whatever you want but they must be present.
 
-Other than these requirements you can have whatever you need in the header.html and footer.html files.
-
-Creating new Pages
+Creating New Pages
 
 To create a new page there are two steps. 
 
