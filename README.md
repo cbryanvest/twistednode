@@ -28,12 +28,12 @@ node twistednode.js
 
 or your favorite package manager.
 
-The general usage is to edit the files in the parts folder. This folder must contain the files header.html, footer.html, and whatever pages you are going to call from the server.
+The general usage is to edit the files in the parts folder. This folder must contain your header and footer files. These can be set in the route shown inthe example below.
 
 The header.html and footer.html can contain whatever you want but they have to contain the page head and page end.
 
 
-Page Head should contain at least these elements
+If serving a full page header should contain at least these elements
 ```html
 <!DOCTYPE html>
    <html>
@@ -43,11 +43,13 @@ Page Head should contain at least these elements
 ```
         
 
-Page End could contain at least these elements
+Also if serving a full page footer should could contain at least these elements
 ```html
 </body>
 </html>
 ```
+Though this could also be used to serve somthing you are going to load into another page in which case the header and footer files can be blank and content can be whatever you want to put in it.
+
 Other than these requirements you can have whatever you need in the header.html and footer.html files.
 
 Creating new Pages
@@ -66,7 +68,10 @@ Then edit twistednode.js adding the javascript below. This contains everything t
 
 ```javascript
 app.get('/foo', function(req,res){
-  RenderHTML("foo.html",encoding,function(rendered){
+  var thisheader = 'header.html'
+  var thisfooter = 'footer.html'
+  var thiscontent = 'content.html'
+  RenderHTML(thisheader,thisfooter,thiscontent,encoding,function(rendered){
     console.log(newdata)
     DynamicData(rendered,newdata,function(dynamicdata){
       res.write(dynamicdata)
